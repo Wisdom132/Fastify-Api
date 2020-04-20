@@ -50,10 +50,12 @@ exports.updatePost = async (req, reply) => {
 exports.deletePost = async (req, reply) => {
     try {
         const id = req.params.id
-        let result = await Blog.findByIdAndDelete({
+        let result = await Blog.findByIdAndDelete(
             id
-        });
-        return result
+        );
+        return {
+            Message: "Post Deleted"
+        }
 
     } catch (err) {
         throw boom.boomify(err)
