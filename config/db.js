@@ -1,20 +1,13 @@
-const mongoose = require('mongoose')
 const fastifyPlugin = require('fastify-plugin')
+const mongoose = require('mongoose')
 
 // Connect to DB
-let db = () => {
-    mongoose
-        .connect("mongodb://localhost:27017/fastify-blog", {
+async function dbConnector(fastify, options) {
+    const url = "mongodb://localhost:27017/fastify-blog"
+    const db = await mongoose
+        .connect(url, {
             useNewUrlParser: true
         })
-        .then(() => {
-            console.log("Database is connected");
-        })
-        .catch(err => {
-            console.log({
-                database_error: err
-            });
-        })
+    fastify.decorate('mongo', db)
 }
-
-module.exports = fastifyPlugin(db)
+module.exports = fastifyPlugin(dbConnector)

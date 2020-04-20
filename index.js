@@ -9,6 +9,7 @@ const app = fastify({
 app.register(db)
 
 routes.forEach((route, index) => {
+
     app.route(route)
 })
 app.get("/", async () => {
